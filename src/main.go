@@ -12,24 +12,24 @@ import (
 )
 
 type Product struct {
-	Id    int     `json: "id"`
-	Name  string  `json: "name"`
-	Price float32 `json: "price"`
-	Stock int     `json: "stock"`
+	Id    int     `json:"id"`
+	Name  string  `json:"name"`
+	Price float32 `json:"price"`
+	Stock int     `json:"stock"`
 }
 
 type Customer struct {
-	Id      int    `json: "id"`
-	Email   string `json: "email"`
-	Name    string `json: "name"`
-	Address string `json: "address"`
+	Id      int    `json:"id"`
+	Email   string `json:"email"`
+	Name    string `json:"name"`
+	Address string `json:"address"`
 }
 
 type Purchase struct {
-	Id        int      `json: "id"`
-	ProductId int      `json: "product_id"`
-	Quantity  int      `json: "quantity"`
-	Customer  Customer `json: "customer"`
+	Id        int      `json:"id"`
+	ProductId int      `json:"product_id"`
+	Quantity  int      `json:"quantity"`
+	Customer  Customer `json:"customer"`
 }
 
 var productsMem []*Product

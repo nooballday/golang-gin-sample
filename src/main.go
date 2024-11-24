@@ -57,6 +57,10 @@ func getPurchaseRouter(r *gin.Engine) *gin.Engine {
 	return r
 }
 
+/*
+*
+test
+*/
 func createPurchaseRouter(r *gin.Engine) *gin.Engine {
 	r.POST("/purchase", func(ctx *gin.Context) {
 		var purchase Purchase
@@ -64,14 +68,17 @@ func createPurchaseRouter(r *gin.Engine) *gin.Engine {
 			ctx.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error(),
 			})
+			return
 		} else {
 			pur, err := createPurchase(&purchase)
 			if err != nil {
 				ctx.JSON(http.StatusBadRequest, gin.H{
 					"error": err.Error(),
 				})
+				return
 			} else {
 				ctx.JSON(http.StatusOK, pur)
+				return
 			}
 		}
 	})
@@ -83,9 +90,9 @@ func main() {
 
 	r := SetupRouter()
 
-	_ = getProductsRouter(r)
-	_ = getPurchaseRouter(r)
-	_ = createPurchaseRouter(r)
+	getProductsRouter(r)
+	getPurchaseRouter(r)
+	createPurchaseRouter(r)
 
 	r.Run()
 }

@@ -4,10 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"net/http"
-	"os"
-
+	_ "embed"
 	"github.com/gin-gonic/gin"
 )
 
@@ -31,6 +29,9 @@ type Purchase struct {
 	Quantity  int      `json:"quantity"`
 	Customer  Customer `json:"customer"`
 }
+
+//go:embed data/products.json
+var productBytes []byte
 
 var productsMem []*Product
 var purchasesMem []*Purchase
@@ -97,22 +98,6 @@ func main() {
 	r.Run()
 }
 
-func getProductFile() []byte {
-	file, err := os.Open("../products.json")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
-	bytes, err := io.ReadAll(file)
-
-	if err != nil {
-		panic(err)
-	}
-
-	return bytes
-}
-
 func parseProductsJsonFile(bytes []byte) []*Product {
 	var products []*Product
 
@@ -124,7 +109,6 @@ func parseProductsJsonFile(bytes []byte) []*Product {
 }
 
 func addProductsToMemory() {
-	productBytes := getProductFile()
 	products := parseProductsJsonFile(productBytes)
 	productsMem = products
 }

@@ -7,7 +7,11 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	_ "embed"
 )
+
+//go:embed data/products.json
+var productsByte []byte
 
 func Equal[V comparable](t *testing.T, got, expected V) {
 	t.Helper()
@@ -26,8 +30,6 @@ func ErrEqual(t *testing.T, got error, expected string) {
 }
 
 func TestParseFile(t *testing.T) {
-	productsByte := getProductFile()
-
 	productsBytesLen := len(productsByte)
 
 	Equal(t, productsBytesLen, 5109)
